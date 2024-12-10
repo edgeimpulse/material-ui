@@ -7,12 +7,28 @@ import {
   unstable_useId as useId,
 } from '@mui/utils';
 
-// https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
-// Give up on IE11 support for this feature
+const diacriticsMap = {
+  'á': 'a', 'à': 'a', 'ã': 'a', 'â': 'a', 'ä': 'a',
+  'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+  'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
+  'ó': 'o', 'ò': 'o', 'õ': 'o', 'ô': 'o', 'ö': 'o',
+  'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
+  'ý': 'y', 'ÿ': 'y',
+  'ñ': 'n',
+  'ç': 'c',
+  // Uppercase variants
+  'Á': 'A', 'À': 'A', 'Ã': 'A', 'Â': 'A', 'Ä': 'A',
+  'É': 'E', 'È': 'E', 'Ê': 'E', 'Ë': 'E',
+  'Í': 'I', 'Ì': 'I', 'Î': 'I', 'Ï': 'I',
+  'Ó': 'O', 'Ò': 'O', 'Õ': 'O', 'Ô': 'O', 'Ö': 'O',
+  'Ú': 'U', 'Ù': 'U', 'Û': 'U', 'Ü': 'U',
+  'Ý': 'Y',
+  'Ñ': 'N',
+  'Ç': 'C'
+};
+
 function stripDiacritics(string) {
-  return typeof string.normalize !== 'undefined'
-    ? string.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    : string;
+  return string.split('').map(char => diacriticsMap[char] || char).join('');
 }
 
 export function createFilterOptions(config = {}) {
